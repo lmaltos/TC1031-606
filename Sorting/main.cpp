@@ -1,17 +1,19 @@
 #include <iostream>
+#include "quickSort.h"
 using namespace std;
 
 void insertionSort(int arr[], int n);
 void mergeSort(int arr[], int left, int right);
 
 int main() {
-    int my_array[10] = {9,8,7,6,5,4,3,2,1,0};
-    for (int i = 0; i < 10; i++) {
-        my_array[i] = rand() % 100;
-    }
+    int my_array[8] = {15,22,13,27,12,10,20,25};
+    //for (int i = 0; i < 8; i++) {
+    //    my_array[i] = rand() % 100;
+    //}
     //insertionSort(my_array,10);
-    mergeSort(my_array,0,9);
-    for (int i = 0; i < 10; i++) {
+    //mergeSort(my_array,0,9);
+    quickSort(my_array,0,8);
+    for (int i = 0; i < 8; i++) {
         cout << my_array[i] << " ";
     }
     cout << endl;
