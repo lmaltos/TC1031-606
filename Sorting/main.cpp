@@ -4,17 +4,33 @@ using namespace std;
 
 void insertionSort(int arr[], int n);
 void mergeSort(int arr[], int left, int right);
+template <typename T>
+void print(T[],int);
 
 int main() {
-    int my_array[8] = {15,22,13,27,12,10,20,25};
-    //for (int i = 0; i < 8; i++) {
-    //    my_array[i] = rand() % 100;
-    //}
+    int my_array_int[8] = {15,22,13,27,12,10,20,25};
     //insertionSort(my_array,10);
     //mergeSort(my_array,0,9);
-    quickSort(my_array,0,8);
-    for (int i = 0; i < 8; i++) {
-        cout << my_array[i] << " ";
+    print(my_array_int,8);
+    quickSort<int>(my_array_int,0,8);
+    print(my_array_int,8);
+
+    string my_array[] = {"world", "quick", "sort", "algorithm", "hello", "sorting", "strings", "end"};
+    print(my_array,8);
+    quickSort<string>(my_array,0,8);
+    print(my_array,8);
+    cout << endl;
+
+    char char_arr[10] = {'q','w','e','r','t','y','a','s','d','f'};
+    print(char_arr,10);
+    quickSort(char_arr,0,10);
+    print(char_arr,10);
+}
+
+template <typename T>
+void print(T arr[],int n){
+    for (int i = 0; i < n; i++) {
+        cout << arr[i] << " ";
     }
     cout << endl;
 }
