@@ -1,30 +1,31 @@
 #include <iostream>
 #include <fstream>
+#include "Record.h"
+#include "Date.h" // those libraries already are included in record
+#include "IpAddress.h"
+#include <vector>
 
 using namespace std;
+void readData(string,vector<Record>&);
 
 int main(int argc, char *argv[]) {
-    ifstream s;
     string l;
     string filename = "bitacora.txt";
     if (argc > 1) {
         filename = string(argv[1]);
     }
-    string month;
-    int day;
-    string hour;
-    string ip;
-    string message;
-    int records = 0;
+    vector<Record> records;
+    readData(filename,records);
+    cout << "# of records : " << records.size() << endl;
+}
 
-    s.open(filename);
+void readData(string filename, vector<Record> &records) {
+    ifstream s;
+    s.open(filename); // we can check before if the file already exists
+    Record r;
     while (!s.eof()) {
-        s >> month >> day >> hour >> ip;
-        getline(s,message);
-        records++;
+        s >> r; // using the overload of operator >> to make an easy reading
+        records.push_back(r);
     }
-    cout << "# of records : " << records << endl;
-    cout << "Last record: ";
-    cout << month << " " << day << " " << hour << " " << ip << " " << message << endl;
     s.close();
 }
