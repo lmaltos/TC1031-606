@@ -1,11 +1,26 @@
 #include <iostream>
 #include "linkedlist.h"
+#include "stack.h"
 
 template <class T>
 void printList(linkedlist<T>&);
 
 using namespace std;
 int main() {
+    stack<int> S;   
+    S.push(0);
+    S.push(1);
+    S.push(2);
+    S.push(3);
+    while (!S.isEmpty()) {
+        cout << S.Top() << " ";
+        S.pop();
+    }
+    cout << endl;
+    return 0;
+}
+
+int mainListas() {
     linkedlist<int> L;
     linkedlist<string> S;
     for (int i = 0; i < 10; i++) {
