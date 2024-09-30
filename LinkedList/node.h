@@ -9,7 +9,7 @@ class node {
     node(T);
     node(T,node<T>*);
     T getData();
-    node<T> getNext();
+    node<T>* getNext();
     void setData(T);
     void setNext(node<T>*);
 };
@@ -32,7 +32,7 @@ T node<T>::getData() {
 }
 
 template <class T>
-node<T> node<T>::getNext() {
+node<T>* node<T>::getNext() {
     return next;
 }
 
