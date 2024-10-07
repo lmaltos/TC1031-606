@@ -11,16 +11,17 @@ int main() {
         a.add(x);
     }
     cout << endl;
+    int k = 10;
     do {
         cout << "Value to search: ";
         cin >> n;
         if (a.search(n)) {
             cout << "The value " << n << " is in the BST" << endl;
-            break;
+            a.erase(n);
         }
         else {
             cout << "The value " << n << " is not in the BST" << endl;
         }
-    } while (true);
+    } while (--k > 0);
     return 0;
 }

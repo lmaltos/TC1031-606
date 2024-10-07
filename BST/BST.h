@@ -13,6 +13,7 @@ class BST {
     ~BST();
     bool search(T);
     void add(T);
+    void erase(T);
 };
 
 template <class T>
@@ -69,4 +70,54 @@ void BST<T>::add(T data) {
     else {
         father->setRight(n);
     }
+}
+
+template <class T>
+void BST<T>::erase(T data) {
+    if (!search(data))
+        return; // data does not exist in BST
+    nodeT<T> *p = root, *father = nullptr;
+    while (p != nullptr) {
+        if (p->getData() == data)
+            break;
+        father = p;
+        p = (p->getData() > data ? p->getLeft() : p->getRight());
+    }
+    if (p->getLeft() == nullptr && p->getRight() == nullptr) {
+        cout << "erase " << p << " " << p->getData() << endl;
+        delete p;
+        if (father == nullptr) {
+            root = nullptr; // was the only element in the BST
+        }
+        else if (father->getData() > data) {
+            father->setLeft(nullptr);
+        }
+        else {
+            father->setRight(nullptr);
+        }
+    }
+    else if (p->getLeft() == nullptr || p->getRight() == nullptr) {
+        nodeT<T> *son = p->getLeft() == nullptr ? p->getRight() : p->getLeft();
+        if (father == nullptr) {
+            root = son;
+        }
+        else if (father->getData() > data) {
+            father->setLeft(son);
+        }
+        else {
+            father->setRight(son);
+        }
+        cout << "erase " << p << " " << p->getData() << endl;
+        delete p;
+    }
+    else {
+        nodeT<T> *s = p->getRight();
+        while (s->getLeft() != nullptr) {
+            s = s->getLeft();
+        }
+        T val = s->getData();
+        erase(val);
+        p->setData(val);
+    }
+    
 }
