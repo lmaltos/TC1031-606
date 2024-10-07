@@ -8,12 +8,19 @@ class BST {
   private:
     nodeT<T> *root;
     void clean(nodeT<T> *);
+    void preorder(nodeT<T> *);
+    void inorder(nodeT<T> *);
+    void postorder(nodeT<T> *);
   public:
     BST();
     ~BST();
     bool search(T);
     void add(T);
     void erase(T);
+    void preorder();
+    void inorder();
+    void postorder();
+    void bylevel();
 };
 
 template <class T>
@@ -120,4 +127,68 @@ void BST<T>::erase(T data) {
         p->setData(val);
     }
     
+}
+
+template <class T>
+void BST<T>::preorder() {
+    preorder(root);
+    cout << endl;
+}
+
+template <class T>
+void BST<T>::inorder() {
+    inorder(root);
+    cout << endl;
+}
+
+template <class T>
+void BST<T>::postorder() {
+    postorder(root);
+    cout << endl;
+}
+
+template <class T>
+void BST<T>::preorder(nodeT<T> *p) {
+    if (p != nullptr) {
+        cout << p->getData() << " ";
+        preorder(p->getLeft());
+        preorder(p->getRight());
+    }
+}
+
+template <class T>
+void BST<T>::inorder(nodeT<T> *p) {
+    if (p != nullptr) {
+        inorder(p->getLeft());
+        cout << p->getData() << " ";
+        inorder(p->getRight());
+    }
+}
+
+template <class T>
+void BST<T>::postorder(nodeT<T> *p) {
+    if (p != nullptr) {
+        postorder(p->getLeft());
+        postorder(p->getRight());
+        cout << p->getData() << " ";
+    }
+}
+
+#include <queue>
+template <class T>
+void BST<T>::bylevel() {
+    queue<nodeT<T>*> q;
+    nodeT<T> *p;
+    if (root != nullptr)
+        q.push(root);
+    while (!q.empty()) {
+        p = q.front();
+        q.pop();
+        cout << p->getData() << " ";
+        if (p->getLeft() != nullptr)
+            q.push(p->getLeft());
+        if (p->getRight() != nullptr)
+            q.push(p->getRight());
+    }
+    cout << endl;
 }
