@@ -5,7 +5,7 @@
 using namespace std;
 template <class T>
 class BST {
-  private:
+  protected:
     nodeT<T> *root;
     void clean(nodeT<T> *);
     void preorder(nodeT<T> *);
@@ -34,9 +34,12 @@ BST<T>::~BST() {
 }
 
 template <class T>
-void BST<T>::clean(nodeT<T>* p) {
+void BST<T>::clean(nodeT<T> *p) {
     if (p == nullptr)
         return;
+
+    nodeT<T> nodo;
+    nodo.getLeft();
     clean(p->getLeft());
     clean(p->getRight());
     cout << "delete " << p << " " << p->getData() << endl;
