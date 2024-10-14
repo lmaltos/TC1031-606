@@ -1,8 +1,17 @@
 #include <iostream>
-#include "BST.h"
+#include "AVL.h"
 
 using namespace std;
 int main() {
+    AVL<int> x;
+    for (int i = 1; i < 15; i++) {
+        x.add(rand()%100);
+    }
+    x.bylevel();
+    return 0;
+}
+
+int main_BST() {
     BST<int> a;
     int n;
     for (int i = 0; i < 20; i++) {

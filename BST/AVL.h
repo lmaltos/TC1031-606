@@ -2,11 +2,12 @@
 #include "BST.h"
 
 template <class T>
-class AVL : BST<T> {
+class AVL : public BST<T> {
   private:
     bool isBalanced(T);
     bool isBalanced(nodeT<T> *p);
     int height(nodeT<T>*);
+    void changeReference(nodeT<T>*,nodeT<T>*);
   public:
     AVL();
     ~AVL();
@@ -26,7 +27,7 @@ AVL<T>::~AVL() {
 
 template <class T>
 bool AVL<T>::isBalanced(T data) {
-    nodeT<T> *p = root;
+    nodeT<T> *p = BST<T>::root;
     while (p->getData() != data) {
         if (!isBalanced(p)) {
             return false;
@@ -46,28 +47,52 @@ bool AVL<T>::isBalanced(nodeT<T> *p) {
 
 template <class T>
 void AVL<T>::add(T data) {
-    BST::add(data);
-    if (isBalnaced(data)) {
+    BST<T>::add(data);
+    if (isBalanced(data)) {
         return;
     }
     // look for the pivot
-    nodeT<T> *p = root, *pivot;
+    nodeT<T> *p = BST<T>::root, *B;
     while (p->getData() != data) {
         if (!isBalanced(p)) {
-            pivot = p;
+            B = p;
         }
         p = p->getData() > data ? p->getLeft() : p->getRight();
     }
-    if (pivot->getData() > data) {
-
+    nodeT<T> *A;
+    if (B->getData() > data) {
+        A = B->getLeft(); // we are on the left of B
+        if (A->getData() > data) {
+            // Single right rotation
+            B->setLeft(A->getRight());
+            A->setRight(B);
+            changeReference(B,A);
+        }
+        else {
+            // Double rotation to right
+            nodeT<T> *C = A->getRight(); // right of A
+            B->setLeft(C->getRight());
+            A->setRight(C->getLeft());
+            C->setLeft(A);
+            C->setRight(B);
+            changeReference(B,C);
+        }
     }
     else {
-        nodeT<T> *A = pivot->getRight();
+        A = B->getRight(); // we are on the right of B
         if (A->getData() > data) {
-
+            nodeT<T> *C = A->getLeft();
+            B->setRight(C->getLeft());
+            A->setLeft(C->getRight());
+            C->setLeft(B);
+            C->setRight(A);
+            changeReference(B,C);
         }
         else {
             // RSI
+            B->setRight(A->getLeft());
+            A->setLeft(B);
+            changeReference(B,A);
         }
     }
 }
@@ -80,4 +105,23 @@ int AVL<T>::height(nodeT<T>* p) {
     hl = height(p->getLeft());
     hr = height(p->getRight());
     return hl > hr ? hl + 1 : hr + 1;
+}
+
+template <class T>
+void AVL<T>::changeReference(nodeT<T>* B,nodeT<T>* A) {
+    nodeT<T> *p = BST<T>::root, *q = nullptr;
+    while (p != B) {
+        q = p;
+        p = p->getData() > B->getData() ? p->getLeft() : p->getRight();
+    }
+    if (q == nullptr) {
+        BST<T>::root = A;
+    }
+    else if (q->getData() > B->getData()) {
+        q->setLeft(A);
+    }
+    else {
+        q->setRight(A);
+    }
+       
 }

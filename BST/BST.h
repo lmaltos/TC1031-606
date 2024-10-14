@@ -15,7 +15,7 @@ class BST {
     BST();
     ~BST();
     bool search(T);
-    void add(T);
+    virtual void add(T);
     void erase(T);
     void preorder();
     void inorder();
