@@ -16,7 +16,7 @@ class BST {
     ~BST();
     bool search(T);
     virtual void add(T);
-    void erase(T);
+    virtual void erase(T);
     void preorder();
     void inorder();
     void postorder();
@@ -38,8 +38,6 @@ void BST<T>::clean(nodeT<T> *p) {
     if (p == nullptr)
         return;
 
-    nodeT<T> nodo;
-    nodo.getLeft();
     clean(p->getLeft());
     clean(p->getRight());
     cout << "delete " << p << " " << p->getData() << endl;
@@ -87,9 +85,7 @@ void BST<T>::erase(T data) {
     if (!search(data))
         return; // data does not exist in BST
     nodeT<T> *p = root, *father = nullptr;
-    while (p != nullptr) {
-        if (p->getData() == data)
-            break;
+    while (p->getData() == data) {
         father = p;
         p = (p->getData() > data ? p->getLeft() : p->getRight());
     }

@@ -12,6 +12,7 @@ class AVL : public BST<T> {
     AVL();
     ~AVL();
     void add(T);
+    void erase(T data)
 };
 
 template <class T>
@@ -104,7 +105,7 @@ int AVL<T>::height(nodeT<T>* p) {
     int hl, hr;
     hl = height(p->getLeft());
     hr = height(p->getRight());
-    return hl > hr ? hl + 1 : hr + 1;
+    return (hl > hr ? hl : hr) + 1;
 }
 
 template <class T>
@@ -124,4 +125,30 @@ void AVL<T>::changeReference(nodeT<T>* B,nodeT<T>* A) {
         q->setRight(A);
     }
        
+}
+
+template <class T>
+void AVL<T>::erase(T data) {
+    BST<T>::erase(data);
+    if (isBalanced(data)) {
+        return;
+    }
+    // look for the pivot
+    nodeT<T> *p = BST<T>::root, *B;
+    while (p->getData() != data) {
+        if (!isBalanced(p)) {
+            B = p;
+        }
+        p = p->getData() > data ? p->getLeft() : p->getRight();
+    }
+    if (B->getData() > data) {
+        // node deleted was in left side
+        nodeT<T> *A = B->getRight();
+        B->setRight(A->getLeft())
+        A->setLeft(B);
+        changeReference(B,A);
+    }
+    else {
+        // node deleted was in right side
+    }
 }

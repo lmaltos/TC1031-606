@@ -13,6 +13,8 @@ int main() {
 
 int main_BST() {
     BST<int> a;
+    BST<string> s;
+    BST<float> f;
     int n;
     for (int i = 0; i < 20; i++) {
         int x = rand() % 50;
