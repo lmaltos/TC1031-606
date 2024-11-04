@@ -10,14 +10,27 @@ int main() {
     g.addNode('C');
     g.addNode('D');
     g.addNode('E');
+    g.addNode('F');
+    g.addNode('G');
+    g.addNode('H');
+    g.addNode('I');
+    g.addNode('J');
     g.addAdyacency('A','B');
-    g.addAdyacency('A','C');
+    g.addAdyacency('A','H');
     g.addAdyacency('A','E');
-    g.addAdyacency('B','D');
+    g.addAdyacency('B','C');
+    g.addAdyacency('B','E');
     g.addAdyacency('C','D');
-    g.addAdyacency('E','D');
-    for (char i = 'A'; i <= 'E'; i++) {
-        for (char j = 'A'; j <= 'E'; j++) {
+    g.addAdyacency('C','E');
+    g.addAdyacency('C','F');
+    g.addAdyacency('E','G');
+    g.addAdyacency('E','H');
+    g.addAdyacency('F','J');
+    g.addAdyacency('G','J');
+    g.addAdyacency('H','J');
+    g.addAdyacency('H','I');
+    for (char i = 'A'; i <= 'J'; i++) {
+        for (char j = 'A'; j <= 'J'; j++) {
             if (i != j) {
                 cout << (g.isAdyacency(i,j) ? 1 : 0) << " ";
             }
@@ -27,5 +40,7 @@ int main() {
         }
         cout << endl;
     }
+    g.breadthFirst();
+    g.depthFirst();
     return 0;
 }

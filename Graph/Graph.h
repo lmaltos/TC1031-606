@@ -16,7 +16,8 @@ class Graph {
     void delAdyacency(T,T);
     Node<T>* findNode(T);
     bool isAdyacency(T,T);
-    // ToDo recorrer graph
+    void breadthFirst();
+    void depthFirst();
 };
 
 template <class T>
@@ -119,4 +120,72 @@ bool Graph<T>::isAdyacency(T tag1,T tag2) {
         return a->isAdyacency(b);
     }
     return false;
+}
+
+#include <queue>
+#include <iostream>
+template <class T>
+void Graph<T>::breadthFirst() {
+    Node<T> *a = first;
+    while (a != nullptr) {
+        a->s = waiting;
+        a = a->getNext();
+    }
+    std::queue<Node<T>*> q;
+    a = first;
+    while (a != nullptr) {
+        if (a->s == waiting) {
+            q.push(a);
+            while (!q.empty()) {
+                Node<T> *b = q.front();
+                q.pop();
+                std::cout << b->getTag() << " ";
+                b->s = processed;
+                Node<T> *c = first;
+                while (c != nullptr) {
+                    if (c->s == waiting && b->isAdyacency(c)) {
+                        q.push(c);
+                        c->s = ready;
+                    }
+                    c = c->getNext();
+                }
+            }
+        }
+        a = a->getNext();
+    }
+    std::cout << std::endl;
+}
+
+#include <stack>
+template <class T>
+void Graph<T>::depthFirst() {
+    Node<T> *a = first;
+    while (a != nullptr) {
+        a->s = waiting;
+        a = a->getNext();
+    }
+    std::stack<Node<T>*> q;
+    a = first;
+    while (a != nullptr) {
+        if (a->s == waiting) {
+            q.push(a);
+            while (!q.empty()) {
+                Node<T> *b = q.top();
+                q.pop();
+                if (b->s == waiting) {
+                    std::cout << b->getTag() << " ";
+                    b->s = processed;
+                    Node<T> *c = first;
+                    while (c != nullptr) {
+                        if (c->s == waiting && b->isAdyacency(c)) {
+                            q.push(c);
+                        }
+                        c = c->getNext();
+                    }
+                }
+            }
+        }
+        a = a->getNext();
+    }
+    std::cout << std::endl;
 }

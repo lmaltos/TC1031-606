@@ -1,6 +1,12 @@
 #pragma once
 #include "Adjacency.h"
 
+enum status {
+    waiting,
+    processed,
+    ready,
+};
+
 template <class T>
 class Node {
   private:
@@ -10,6 +16,7 @@ class Node {
   public:
     Node(T);
     ~Node();
+    status s;
     T getTag();
     Node<T>* getNext();
     void setNext(Node<T>*);
